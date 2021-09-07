@@ -18,28 +18,25 @@ function get_power(device, link_station) {
     }
 }
 
-// Get the best link statition for a given device / set of devices
-function get_best_link_station(devices, link_stations) {
-    let d, ls;
-
-    for (d of devices) {
-        let best_link_station = [0, 0, 0];
-        for (ls of link_stations) {
-            let power = get_power(d, ls);
-            if (power > best_link_station[0]) {
-                best_link_station[0] = power;
-                best_link_station[1] = ls[0];
-                best_link_station[2] = ls[1];
-            }
+// Get the best link statition for a given device
+function get_best_link_station(device, link_stations) {
+    let d = device;
+    let best_link_station = [0, 0, 0];
+    
+    for (let ls of link_stations) {
+        let power = get_power(d, ls);
+        if (power > best_link_station[0]) {
+            best_link_station[0] = power;
+            best_link_station[1] = ls[0];
+            best_link_station[2] = ls[1];
         }
+    }
 
-        if (best_link_station[0] == 0) {
-            console.log("No link station within reach for point " + d[0] + "," + d[1]);
-            return "No link station within reach for point " + d[0] + "," + d[1];
-        } else {
-            console.log("Best link station for point " + d[0]  + "," + d[1] + " is " + best_link_station[1] + "," + best_link_station[2]
-            + " with power " + best_link_station[0])
-        }
+    if (best_link_station[0] == 0) {
+        return "No link station within reach for point " + d[0] + "," + d[1];
+    } else {
+        return "Best link station for point " + d[0]  + "," + d[1] + " is " + best_link_station[1] + "," + best_link_station[2]
+        + " with power " + best_link_station[0];
     }
 }
 
@@ -47,22 +44,22 @@ function get_best_link_station(devices, link_stations) {
 function run_with_default_data() {
     // Every device has two coordinates (x and y)
     const devices = [
-        [4, 4]
-        //[0, 0],
-        //[100, 100],
-        //[15, 10],
-        //[18, 18]
+        [0, 0],
+        [100, 100],
+        [15, 10],
+        [18, 18]
     ];
     // Link stations​ are located at points (x, y) and have reach (r) ([x, y, r])
     const link_stations = [
-        [3, 3, 10]
-        //[0, 0, 10],
-        //[20, 20, 5],
-        //[10, 0, 12]
+        [0, 0, 10],
+        [20, 20, 5],
+        [10, 0, 12]
     ];
  
-    // Find the best link station for a device or a set of devices
-    get_best_link_station(devices, link_stations)
+    // Find the best link station for a device
+    for (let d of devices) {
+        console.log(get_best_link_station(d, link_stations))
+    }
 }
 
 // Expose functions as modules
@@ -73,8 +70,8 @@ module.exports = {
     get_power: function(device, link_station) {
         return get_power(device, link_station);
     },
-    get_best_link_station: function(devices, link_stations) {
-        return get_best_link_station(devices, link_stations);
+    get_best_link_station: function(device, link_stations) {
+        return get_best_link_station(device, link_stations);
     }
 }
 
