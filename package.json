@@ -1,10 +1,12 @@
 {
   "scripts": {
-    "test": "mocha",
-    "start": "node link_station.js"
+    "setup": "npm install",
+    "start": "node link_station.js",
+    "test": "mocha"
   },
   "devDependencies": {
     "chai": "^4.3.4",
-    "mocha": "^9.1.1"
+    "mocha": "^9.1.1",
+    "package": "^1.0.1"
   }
 }
